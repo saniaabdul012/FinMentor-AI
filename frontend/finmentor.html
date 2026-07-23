@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinMentor AI — Your Financial Life Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#3B4A6B;
+    --paper:#F5F1E6;
+    --paper-line:#DCD4BF;
+    --gold:#C9A227;
+    --gold-deep:#9C7D14;
+    --sage:#3F6B4E;
+    --sage-soft:#E4ECE4;
+    --coral:#B4472F;
+    --coral-soft:#F4E2DC;
+    --white:#FFFDF8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:
+      linear-gradient(var(--paper-line) 1px, transparent 1px) 0 0/100% 32px,
+      var(--paper);
+    line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  h1,h2,h3,.display{font-family:'Fraunces', serif;}
+  a{color:inherit;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,241,230,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--paper-line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem;}
+  .brand-mark{
+    width:30px; height:30px; border-radius:50%;
+    background:var(--ink); color:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-weight:700; font-size:1rem;
+  }
+  .navlinks{display:flex; gap:26px; font-size:0.92rem; font-weight:500;}
+  .navlinks a{text-decoration:none; color:var(--ink-soft); border-bottom:2px solid transparent; padding-bottom:3px; transition:.2s;}
+  .navlinks a:hover{color:var(--ink); border-color:var(--gold);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1100px; margin:0 auto; padding:64px 32px 40px;
+    display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-block; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    letter-spacing:0.12em; text-transform:uppercase; color:var(--sage);
+    background:var(--sage-soft); padding:5px 10px; border-radius:3px; margin-bottom:16px;
+  }
+  .hero h1{font-size:2.6rem; font-weight:600; line-height:1.15; margin-bottom:18px;}
+  .hero h1 em{font-style:italic; color:var(--gold-deep);}
+  .hero p{font-size:1.05rem; color:var(--ink-soft); max-width:46ch; margin-bottom:26px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    font-family:'Inter'; font-weight:600; font-size:0.95rem;
+    padding:13px 22px; border-radius:3px; border:none; text-decoration:none;
+  }
+  .btn-primary{background:var(--ink); color:var(--white);}
+  .btn-primary:hover{background:#132038;}
+  .btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--ink); margin-left:10px;}
+  .btn-ghost:hover{background:var(--ink); color:var(--white);}
+
+  /* Journey SVG */
+  .journey-wrap{position:relative;}
+  svg#journeyPath path.route{
+    fill:none; stroke:var(--gold-deep); stroke-width:3; stroke-dasharray:6 7; stroke-linecap:round;
+  }
+  .milestone circle{fill:var(--white); stroke:var(--ink); stroke-width:2;}
+  .milestone text{font-family:'JetBrains Mono'; font-size:10px; fill:var(--ink-soft);}
+  .milestone .label{font-family:'Inter'; font-size:12px; font-weight:600; fill:var(--ink);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{max-width:1100px; margin:0 auto; padding:70px 32px;}
+  .section-head{margin-bottom:34px;}
+  .section-head .eyebrow{margin-bottom:10px;}
+  .section-head h2{font-size:1.9rem; font-weight:600;}
+  .section-head p{color:var(--ink-soft); max-width:60ch; margin-top:8px;}
+
+  .card{
+    background:var(--white); border:1px solid var(--paper-line); border-radius:5px;
+    padding:24px;
+  }
+
+  /* ---------- ONBOARDING / ROADMAP ---------- */
+  .plan-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:0.82rem; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
+  .field input, .field select{
+    width:100%; padding:10px 12px; border:1.5px solid var(--paper-line); border-radius:3px;
+    font-family:'Inter'; font-size:0.95rem; background:var(--white); color:var(--ink);
+  }
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold-deep);}
+  .risk-chips{display:flex; gap:8px;}
+  .chip{
+    flex:1; text-align:center; padding:9px 6px; border:1.5px solid var(--paper-line); border-radius:3px;
+    font-size:0.85rem; cursor:pointer; font-weight:500; color:var(--ink-soft);
+  }
+  .chip.active{background:var(--ink); color:var(--white); border-color:var(--ink);}
+
+  .roadmap-output{display:flex; flex-direction:column; gap:12px;}
+  .rm-card{
+    border-left:4px solid var(--gold-deep); background:var(--white); border:1px solid var(--paper-line);
+    border-left:4px solid var(--gold-deep); border-radius:4px; padding:16px 18px;
+    display:flex; justify-content:space-between; align-items:center; gap:14px;
+  }
+  .rm-card .rm-title{font-weight:600; font-size:0.95rem; margin-bottom:3px;}
+  .rm-card .rm-desc{font-size:0.82rem; color:var(--ink-soft);}
+  .rm-card .rm-amt{font-family:'JetBrains Mono'; font-weight:700; font-size:1.05rem; white-space:nowrap;}
+  .rm-empty{color:var(--ink-soft); font-size:0.9rem; padding:30px; text-align:center; border:1.5px dashed var(--paper-line); border-radius:4px;}
+
+  /* ---------- CALCULATORS ---------- */
+  .calc-tabs{display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;}
+  .calc-tab{
+    padding:9px 16px; border-radius:20px; border:1.5px solid var(--paper-line);
+    font-size:0.85rem; font-weight:600; cursor:pointer; color:var(--ink-soft); background:var(--white);
+  }
+  .calc-tab.active{background:var(--sage); color:var(--white); border-color:var(--sage);}
+  .calc-panel{display:none;}
+  .calc-panel.active{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .result-box{
+    background:var(--ink); color:var(--white); border-radius:5px; padding:22px;
+    display:flex; flex-direction:column; justify-content:center; gap:10px;
+  }
+  .result-row{display:flex; justify-content:space-between; font-size:0.9rem; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:8px;}
+  .result-row:last-child{border:none; padding-bottom:0;}
+  .result-row .big{font-family:'JetBrains Mono'; font-size:1.5rem; font-weight:700; color:var(--gold);}
+  .bar-chart{display:flex; align-items:flex-end; gap:18px; height:120px; margin-top:14px;}
+  .bar{flex:1; background:var(--gold); border-radius:3px 3px 0 0; position:relative; min-height:4px;}
+  .bar.invested{background:#7A8CA8;}
+  .bar-label{position:absolute; bottom:-22px; left:0; right:0; text-align:center; font-size:0.72rem; color:var(--white); font-family:'JetBrains Mono';}
+
+  /* ---------- COMPARISON ---------- */
+  table.compare{width:100%; border-collapse:collapse; background:var(--white); border:1px solid var(--paper-line); border-radius:5px; overflow:hidden;}
+  table.compare th, table.compare td{padding:14px 16px; text-align:left; font-size:0.9rem; border-bottom:1px solid var(--paper-line);}
+  table.compare th{background:var(--ink); color:var(--white); font-weight:600; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.03em;}
+  table.compare tr:last-child td{border-bottom:none;}
+  table.compare td.hi{color:var(--sage); font-weight:700;}
+
+  /* ---------- EDUCATION ---------- */
+  .accordion{display:flex; flex-direction:column; gap:10px;}
+  .acc-item{border:1px solid var(--paper-line); border-radius:4px; background:var(--white); overflow:hidden;}
+  .acc-head{padding:16px 18px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-weight:600; font-size:0.95rem;}
+  .acc-head .plus{font-family:'JetBrains Mono'; color:var(--gold-deep); font-size:1.1rem;}
+  .acc-body{max-height:0; overflow:hidden; transition:max-height .25s ease; font-size:0.88rem; color:var(--ink-soft);}
+  .acc-body p{padding:0 18px 16px;}
+  .acc-item.open .acc-body{max-height:200px;}
+
+  /* ---------- CHAT ---------- */
+  #chatToggle{
+    position:fixed; bottom:26px; right:26px; z-index:100;
+    background:var(--ink); color:var(--gold); border:none; border-radius:50%;
+    width:58px; height:58px; font-size:1.4rem; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.25);
+  }
+  #chatPanel{
+    position:fixed; bottom:96px; right:26px; z-index:100; width:340px; max-height:460px;
+    background:var(--white); border:1px solid var(--paper-line); border-radius:8px;
+    box-shadow:0 12px 32px rgba(0,0,0,0.18); display:none; flex-direction:column; overflow:hidden;
+  }
+  #chatPanel.open{display:flex;}
+  .chat-head{background:var(--ink); color:var(--white); padding:14px 16px; font-weight:600; font-size:0.9rem; display:flex; justify-content:space-between; align-items:center;}
+  .chat-body{flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; max-height:280px;}
+  .msg{padding:9px 12px; border-radius:10px; max-width:85%; line-height:1.4;}
+  .msg.bot{background:var(--sage-soft); align-self:flex-start; border-bottom-left-radius:2px;}
+  .msg.user{background:var(--ink); color:var(--white); align-self:flex-end; border-bottom-right-radius:2px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:6px; padding:0 14px 10px;}
+  .qchip{font-size:0.72rem; padding:6px 10px; background:var(--paper); border:1px solid var(--paper-line); border-radius:14px; cursor:pointer; color:var(--ink-soft);}
+  .chat-input{display:flex; border-top:1px solid var(--paper-line);}
+  .chat-input input{flex:1; border:none; padding:12px; font-family:'Inter'; font-size:0.85rem;}
+  .chat-input input:focus{outline:none;}
+  .chat-input button{background:var(--gold-deep); color:var(--white); border:none; padding:0 16px; cursor:pointer; font-weight:600;}
+
+  footer{text-align:center; padding:36px; color:var(--ink-soft); font-size:0.8rem; border-top:1px solid var(--paper-line);}
+
+  @media(max-width:800px){
+    .hero{grid-template-columns:1fr;}
+    .plan-grid{grid-template-columns:1fr;}
+    .calc-panel.active{grid-template-columns:1fr;}
+    .navlinks{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><div class="brand-mark">₹</div> FinMentor AI</div>
+  <div class="navlinks">
+    <a href="#plan">Plan My Journey</a>
+    <a href="#calculators">Calculators</a>
+    <a href="#compare">Compare</a>
+    <a href="#learn">Learn</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <span class="eyebrow">Beginner-first financial planning</span>
+    <h1>Turn your <em>first salary</em> into a life-long roadmap.</h1>
+    <p>SIP, FD, PPF, emergency funds, big goals — most students never get taught how these connect. FinMentor AI builds one complete plan from your income to your goals, instead of one calculator at a time.</p>
+    <a href="#plan" class="btn btn-primary">Build my roadmap →</a>
+    <a href="#chat-cta" class="btn btn-ghost" onclick="document.getElementById('chatToggle').click(); return false;">Ask FinMentor</a>
+  </div>
+  <div class="journey-wrap">
+    <svg id="journeyPath" viewBox="0 0 420 320" width="100%">
+      <path class="route" d="M30,280 C100,290 90,210 160,200 C230,190 220,110 290,95 C330,86 360,60 390,35"/>
+      <g class="milestone">
+        <circle cx="30" cy="280" r="16"/>
+        <text x="30" y="284" text-anchor="middle">🎓</text>
+        <text class="label" x="30" y="308" text-anchor="middle">Student</text>
+      </g>
+      <g class="milestone">
+        <circle cx="160" cy="200" r="16"/>
+        <text x="160" y="204" text-anchor="middle">💼</text>
+        <text class="label" x="160" y="228" text-anchor="middle">First job</text>
+      </g>
+      <g class="milestone">
+        <circle cx="290" cy="95" r="16"/>
+        <text x="290" y="99" text-anchor="middle">📈</text>
+        <text class="label" x="290" y="123" text-anchor="middle">Investing</text>
+      </g>
+      <g class="milestone">
+        <circle cx="390" cy="35" r="16"/>
+        <text x="390" y="39" text-anchor="middle">🏡</text>
+        <text class="label" x="376" y="16" text-anchor="middle">Big goals</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- PLAN MY JOURNEY -->
+<section id="plan">
+  <div class="section-head">
+    <span class="eyebrow">Step 1</span>
+    <h2>Tell us where you are</h2>
+    <p>A few basics — this drives the whole roadmap. No real data is stored, this is a prototype.</p>
+  </div>
+  <div class="plan-grid">
+    <div class="card">
+      <div class="field">
+        <label>Monthly income (₹)</label>
+        <input type="number" id="income" placeholder="e.g. 25000" value="25000">
+      </div>
+      <div class="field">
+        <label>Current savings (₹)</label>
+        <input type="number" id="savings" placeholder="e.g. 10000" value="10000">
+      </div>
+      <div class="field">
+        <label>Primary goal</label>
+        <select id="goal">
+          <option value="house">Buying a house</option>
+          <option value="studies">Higher studies</option>
+          <option value="retirement">Retirement</option>
+          <option value="wedding">Wedding</option>
+          <option value="emergency">Just building a safety net</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Goal timeline (years)</label>
+        <input type="number" id="years" value="5">
+      </div>
+      <div class="field">
+        <label>Risk appetite</label>
+        <div class="risk-chips">
+          <div class="chip" data-risk="low">Low</div>
+          <div class="chip active" data-risk="medium">Medium</div>
+          <div class="chip" data-risk="high">High</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="generateRoadmap()">Generate my roadmap</button>
+    </div>
+
+    <div>
+      <h3 style="font-size:1.1rem; margin-bottom:14px;">Your suggested monthly split</h3>
+      <div class="roadmap-output" id="roadmapOutput">
+        <div class="rm-empty">Fill in your details and hit "Generate my roadmap" to see your personalized split.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATORS -->
+<section id="calculators">
+  <div class="section-head">
+    <span class="eyebrow">Step 2</span>
+    <h2>Run the numbers</h2>
+    <p>See exactly how your money grows under each instrument.</p>
+  </div>
+  <div class="calc-tabs">
+    <div class="calc-tab active" data-tab="sip">SIP Calculator</div>
+    <div class="calc-tab" data-tab="fd">FD Calculator</div>
+    <div class="calc-tab" data-tab="goal">Goal-based Calculator</div>
+  </div>
+
+  <div class="calc-panel active" id="panel-sip">
+    <div class="card">
+      <div class="field"><label>Monthly investment (₹)</label><input type="number" id="sipAmt" value="3000"></div>
+      <div class="field"><label>Expected annual return (%)</label><input type="number" id="sipRate" value="12"></div>
+      <div class="field"><label>Duration (years)</label><input type="number" id="sipYears" value="10"></div>
+      <button class="btn btn-primary" onclick="calcSIP()">Calculate</button>
+    </div>
+    <div class="result-box" id="sipResult">
+      <div class="result-row"><span>Total invested</span><span class="mono" id="sipInvested">—</span></div>
+      <div class="result-row"><span>Estimated returns</span><span class="mono" id="sipGains">—</span></div>
+      <div class="result-row"><span>Maturity value</span><span class="big" id="sipTotal">—</span></div>
+    </div>
+  </div>
+
+  <div class="calc-panel" id="panel-fd">
+    <div class="card">
+      <div class="field"><label>Principal amount (₹)</label><input type="number" id="fdAmt" value="100000"></div>
+      <div class="field"><label>Interest rate (% p.a.)</label><input type="number" id="fdRate" value="7"></div>
+      <div class="field"><label>Duration (years)</label><input type="number" id="fdYears" value="5"></div>
+      <button class="btn btn-primary" onclick="calcFD()">Calculate</button>
+    </div>
+    <div class="result-box">
+      <div class="result-row"><span>Principal</span><span class="mono" id="fdPrincipal">—</span></div>
+      <div class="result-row"><span>Interest earned</span><span class="mono" id="fdInterest">—</span></div>
+      <div class="result-row"><span>Maturity value</span><span class="big" id="fdTotal">—</span></div>
+    </div>
+  </div>
+
+  <div class="calc-panel" id="panel-goal">
+    <div class="card">
+      <div class="field"><label>Target amount (₹)</label><input type="number" id="goalAmt" value="1000000"></div>
+      <div class="field"><label>Timeline (years)</label><input type="number" id="goalYears" value="5"></div>
+      <div class="field"><label>Expected annual return (%)</label><input type="number" id="goalRate" value="12"></div>
+      <button class="btn btn-primary" onclick="calcGoal()">Calculate</button>
+    </div>
+    <div class="result-box">
+      <div class="result-row"><span>You need to invest monthly</span><span class="big" id="goalMonthly">—</span></div>
+      <div class="result-row"><span>Total you'll invest</span><span class="mono" id="goalInvested">—</span></div>
+      <div class="result-row"><span>Target amount</span><span class="mono" id="goalTarget">—</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare">
+  <div class="section-head">
+    <span class="eyebrow">Step 3</span>
+    <h2>SIP vs FD vs PPF</h2>
+    <p>The comparison every first-time earner searches for — side by side.</p>
+  </div>
+  <table class="compare">
+    <tr><th>Instrument</th><th>Typical Returns</th><th>Risk</th><th>Liquidity</th><th>Tax Benefit</th><th>Best For</th></tr>
+    <tr><td><strong>SIP (Mutual Funds)</strong></td><td class="hi">10–14% p.a.*</td><td>Medium–High</td><td>High (redeemable anytime)</td><td>ELSS SIPs: yes (80C)</td><td>Long-term wealth growth</td></tr>
+    <tr><td><strong>Fixed Deposit</strong></td><td>6.5–7.5% p.a.</td><td>Very Low</td><td>Medium (penalty on early exit)</td><td>5-yr tax-saver FD: yes</td><td>Safety, short-term goals</td></tr>
+    <tr><td><strong>PPF</strong></td><td>7–7.5% p.a.</td><td>Very Low</td><td>Low (15-yr lock-in)</td><td>Fully tax-free (EEE)</td><td>Retirement, long-term safety</td></tr>
+  </table>
+  <p style="font-size:0.78rem; color:var(--ink-soft); margin-top:10px;">*Market-linked, not guaranteed. Illustrative figures for education only.</p>
+</section>
+
+<!-- LEARN -->
+<section id="learn">
+  <div class="section-head">
+    <span class="eyebrow">Step 4</span>
+    <h2>Learn the basics</h2>
+    <p>Bite-sized explainers — tap to expand.</p>
+  </div>
+  <div class="accordion" id="accordion"></div>
+</section>
+
+<footer>FinMentor AI — hackathon prototype. All figures are illustrative and for educational demo purposes only.</footer>
+
+<!-- CHAT -->
+<button id="chatToggle" onclick="toggleChat()">💬</button>
+<div id="chatPanel">
+  <div class="chat-head"><span>Ask FinMentor</span><span onclick="toggleChat()" style="cursor:pointer;">✕</span></div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg bot">Hi! I'm FinMentor. Ask me things like "SIP vs FD" or "how much should I save".</div>
+  </div>
+  <div class="chip-row">
+    <div class="qchip" onclick="askChip('SIP vs FD')">SIP vs FD?</div>
+    <div class="qchip" onclick="askChip('emergency fund')">Emergency fund?</div>
+    <div class="qchip" onclick="askChip('how much save')">How much to save?</div>
+  </div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a question..." onkeydown="if(event.key==='Enter') sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function inr(num){
+  return '₹' + Math.round(num).toLocaleString('en-IN');
+}
+
+/* ---------- risk chips ---------- */
+let riskLevel = 'medium';
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    riskLevel = c.dataset.risk;
+  });
+});
+
+/* ---------- ROADMAP GENERATOR ---------- */
+function generateRoadmap(){
+  const income = parseFloat(document.getElementById('income').value) || 0;
+  const savings = parseFloat(document.getElementById('savings').value) || 0;
+  const goal = document.getElementById('goal').value;
+  const years = parseFloat(document.getElementById('years').value) || 1;
+
+  const monthlyExpenseEstimate = income * 0.5;
+  const emergencyTarget = monthlyExpenseEstimate * 6;
+  const hasEmergencyFund = savings >= emergencyTarget;
+
+  let cards = [];
+
+  if(!hasEmergencyFund){
+    const emergencyAlloc = Math.round(income * 0.15);
+    cards.push({
+      title: "Build your emergency fund first",
+      desc: `Target: ${inr(emergencyTarget)} (6 months of expenses). Park this in a savings account or liquid fund — not locked instruments.`,
+      amt: inr(emergencyAlloc) + "/mo"
+    });
+  }
+
+  const taxSavingAlloc = Math.round(income * (riskLevel==='low' ? 0.20 : 0.12));
+  cards.push({
+    title: "PPF / EPF (tax-saving, safe)",
+    desc: "Long-term, government-backed, tax-free returns. Good base layer of your portfolio.",
+    amt: inr(taxSavingAlloc) + "/mo"
+  });
+
+  const sipPct = riskLevel==='high' ? 0.30 : riskLevel==='medium' ? 0.22 : 0.12;
+  const sipAlloc = Math.round(income * sipPct);
+  cards.push({
+    title: "SIP in Mutual Funds (growth)",
+    desc: `Based on your ${riskLevel} risk appetite — this is your long-term wealth engine.`,
+    amt: inr(sipAlloc) + "/mo"
+  });
+
+  const goalLabels = {
+    house: "Home down-payment goal",
+    studies: "Higher studies fund",
+    retirement: "Retirement corpus",
+    wedding: "Wedding fund",
+    emergency: "Safety net top-up"
+  };
+  const remainingPct = 1 - (hasEmergencyFund?0:0.15) - (riskLevel==='low'?0.20:0.12) - sipPct;
+  const goalAlloc = Math.max(Math.round(income * Math.max(remainingPct, 0.08)), 500);
+  cards.push({
+    title: goalLabels[goal] + ` (${years}-yr goal)`,
+    desc: "Dedicated FD or recurring deposit ladder timed to your goal horizon.",
+    amt: inr(goalAlloc) + "/mo"
+  });
+
+  const out = document.getElementById('roadmapOutput');
+  out.innerHTML = cards.map(c => `
+    <div class="rm-card">
+      <div><div class="rm-title">${c.title}</div><div class="rm-desc">${c.desc}</div></div>
+      <div class="rm-amt">${c.amt}</div>
+    </div>
+  `).join('');
+}
+
+/* ---------- CALCULATOR TABS ---------- */
+document.querySelectorAll('.calc-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.calc-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.calc-panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+/* ---------- SIP CALC ---------- */
+function calcSIP(){
+  const P = parseFloat(document.getElementById('sipAmt').value) || 0;
+  const annualRate = parseFloat(document.getElementById('sipRate').value) || 0;
+  const years = parseFloat(document.getElementById('sipYears').value) || 0;
+  const r = annualRate/100/12;
+  const n = years*12;
+  const fv = r===0 ? P*n : P * ((Math.pow(1+r,n)-1)/r) * (1+r);
+  const invested = P*n;
+  const gains = fv - invested;
+  document.getElementById('sipInvested').innerText = inr(invested);
+  document.getElementById('sipGains').innerText = inr(gains);
+  document.getElementById('sipTotal').innerText = inr(fv);
+}
+
+/* ---------- FD CALC ---------- */
+function calcFD(){
+  const P = parseFloat(document.getElementById('fdAmt').value) || 0;
+  const rate = parseFloat(document.getElementById('fdRate').value) || 0;
+  const years = parseFloat(document.getElementById('fdYears').value) || 0;
+  const n = 4; // quarterly compounding
+  const total = P * Math.pow(1 + (rate/100)/n, n*years);
+  document.getElementById('fdPrincipal').innerText = inr(P);
+  document.getElementById('fdInterest').innerText = inr(total-P);
+  document.getElementById('fdTotal').innerText = inr(total);
+}
+
+/* ---------- GOAL CALC ---------- */
+function calcGoal(){
+  const target = parseFloat(document.getElementById('goalAmt').value) || 0;
+  const years = parseFloat(document.getElementById('goalYears').value) || 1;
+  const annualRate = parseFloat(document.getElementById('goalRate').value) || 0;
+  const r = annualRate/100/12;
+  const n = years*12;
+  const monthly = r===0 ? target/n : target / (((Math.pow(1+r,n)-1)/r) * (1+r));
+  document.getElementById('goalMonthly').innerText = inr(monthly);
+  document.getElementById('goalInvested').innerText = inr(monthly*n);
+  document.getElementById('goalTarget').innerText = inr(target);
+}
+calcSIP(); calcFD(); calcGoal();
+
+/* ---------- EDUCATION ACCORDION ---------- */
+const eduItems = [
+  {q:"What is a SIP?", a:"A Systematic Investment Plan — you invest a fixed amount every month into a mutual fund. Over time, market-linked growth and compounding build wealth, but returns aren't guaranteed."},
+  {q:"What is a Fixed Deposit (FD)?", a:"You lock a lump sum with a bank for a fixed period at a fixed interest rate. Very safe, but returns barely beat inflation."},
+  {q:"What is PPF?", a:"Public Provident Fund — a 15-year government savings scheme with tax-free interest (~7-7.5%). Great for long-term, safe, tax-saving money."},
+  {q:"What is an emergency fund?", a:"3–6 months of your expenses, kept easily accessible (savings account or liquid fund) — not invested — so a sudden expense never forces you to break your investments."},
+  {q:"SIP vs FD — which is better?", a:"FD is safer but grows slowly. SIP has more risk but historically higher long-term growth. Most beginners do both: FD/PPF for safety, SIP for growth."},
+  {q:"Why does compounding matter?", a:"Compounding means your returns start earning their own returns. Starting early — even with a small amount — often beats starting late with a bigger amount."}
+];
+document.getElementById('accordion').innerHTML = eduItems.map((item,i)=>`
+  <div class="acc-item" id="acc-${i}">
+    <div class="acc-head" onclick="toggleAcc(${i})"><span>${item.q}</span><span class="plus">+</span></div>
+    <div class="acc-body"><p>${item.a}</p></div>
+  </div>
+`).join('');
+function toggleAcc(i){
+  document.getElementById('acc-'+i).classList.toggle('open');
+}
+
+/* ---------- CHAT (rule-based fake AI) ---------- */
+function toggleChat(){
+  document.getElementById('chatPanel').classList.toggle('open');
+}
+function askChip(text){
+  document.getElementById('chatInput').value = text;
+  sendChat();
+}
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const body = document.getElementById('chatBody');
+  body.innerHTML += `<div class="msg user">${text}</div>`;
+  input.value = '';
+  const reply = getBotReply(text.toLowerCase());
+  setTimeout(()=>{
+    body.innerHTML += `<div class="msg bot">${reply}</div>`;
+    body.scrollTop = body.scrollHeight;
+  }, 400);
+  body.scrollTop = body.scrollHeight;
+}
+function getBotReply(t){
+  if(t.includes('sip') && t.includes('fd')) return "FD is safe but slow (~7%). SIP carries market risk but historically grows faster long-term (~12%). Most beginners use both: FD/PPF for safety, SIP for growth.";
+  if(t.includes('emergency')) return "Aim for 3–6 months of expenses in a savings account or liquid fund — this is your safety net before you invest anywhere else.";
+  if(t.includes('how much') && t.includes('save')) return "A common starting rule: 50% needs, 30% wants, 20% savings/investments. Adjust the split as your income grows.";
+  if(t.includes('ppf')) return "PPF is a 15-year government scheme with tax-free interest around 7-7.5% — great for long-term, safe money, but it's locked in for a while.";
+  if(t.includes('retire')) return "For retirement, longer timelines let you take more risk early (equity SIPs) and shift to safer instruments (PPF/FD) as you get closer.";
+  if(t.includes('risk')) return "Low risk = FD/PPF. Medium = balanced mutual funds. High = equity SIPs. Your risk appetite should match your goal's timeline — longer timeline, more room for risk.";
+  return "Good question! For this prototype demo, try asking about SIP vs FD, emergency funds, PPF, retirement, or how much to save.";
+}
+</script>
+
+</body>
+</html>
