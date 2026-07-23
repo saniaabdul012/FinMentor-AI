@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinMentor AI — Your Financial Life Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <div class="brand-mark">₹</div>
+    FinMentor AI
+  </div>
+
+  <div class="navlinks">
+    <a href="#plan">Plan My Journey</a>
+    <a href="#calculators">Calculators</a>
+    <a href="#compare">Compare</a>
+    <a href="#learn">Learn</a>
+    <a href="login.html" class="btn btn-primary">Login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <span class="eyebrow">Beginner-first financial planning</span>
+    <h1>Turn your <em>first salary</em> into a life-long roadmap.</h1>
+    <p>SIP, FD, PPF, emergency funds, big goals — most students never get taught how these connect. FinMentor AI builds one complete plan from your income to your goals, instead of one calculator at a time.</p>
+    <a href="#plan" class="btn btn-primary">Build my roadmap →</a>
+    <a href="#chat-cta" class="btn btn-ghost" onclick="document.getElementById('chatToggle').click(); return false;">Ask FinMentor</a>
+  </div>
+  <div class="journey-wrap">
+    <svg id="journeyPath" viewBox="0 0 420 320" width="100%">
+      <path class="route" d="M30,280 C100,290 90,210 160,200 C230,190 220,110 290,95 C330,86 360,60 390,35"/>
+      <g class="milestone">
+        <circle cx="30" cy="280" r="16"/>
+        <text x="30" y="284" text-anchor="middle">🎓</text>
+        <text class="label" x="30" y="308" text-anchor="middle">Student</text>
+      </g>
+      <g class="milestone">
+        <circle cx="160" cy="200" r="16"/>
+        <text x="160" y="204" text-anchor="middle">💼</text>
+        <text class="label" x="160" y="228" text-anchor="middle">First job</text>
+      </g>
+      <g class="milestone">
+        <circle cx="290" cy="95" r="16"/>
+        <text x="290" y="99" text-anchor="middle">📈</text>
+        <text class="label" x="290" y="123" text-anchor="middle">Investing</text>
+      </g>
+      <g class="milestone">
+        <circle cx="390" cy="35" r="16"/>
+        <text x="390" y="39" text-anchor="middle">🏡</text>
+        <text class="label" x="376" y="16" text-anchor="middle">Big goals</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- PLAN MY JOURNEY -->
+<section id="plan">
+  <div class="section-head">
+    <span class="eyebrow">Step 1</span>
+    <h2>Tell us where you are</h2>
+    <p>A few basics — this drives the whole roadmap. No real data is stored, this is a prototype.</p>
+  </div>
+  <div class="plan-grid">
+    <div class="card">
+      <div class="field">
+        <label>Monthly income (₹)</label>
+        <input type="number" id="income" placeholder="e.g. 25000" value="25000">
+      </div>
+      <div class="field">
+        <label>Current savings (₹)</label>
+        <input type="number" id="savings" placeholder="e.g. 10000" value="10000">
+      </div>
+      <div class="field">
+        <label>Primary goal</label>
+        <select id="goal">
+          <option value="house">Buying a house</option>
+          <option value="studies">Higher studies</option>
+          <option value="retirement">Retirement</option>
+          <option value="wedding">Wedding</option>
+          <option value="emergency">Just building a safety net</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Goal timeline (years)</label>
+        <input type="number" id="years" value="5">
+      </div>
+      <div class="field">
+        <label>Risk appetite</label>
+        <div class="risk-chips">
+          <div class="chip" data-risk="low">Low</div>
+          <div class="chip active" data-risk="medium">Medium</div>
+          <div class="chip" data-risk="high">High</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="generateRoadmap()">Generate my roadmap</button>
+    </div>
+
+    <div>
+      <h3 style="font-size:1.1rem; margin-bottom:14px;">Your suggested monthly split</h3>
+      <div class="roadmap-output" id="roadmapOutput">
+        <div class="rm-empty">Fill in your details and hit "Generate my roadmap" to see your personalized split.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATORS -->
+<section id="calculators">
+  <div class="section-head">
+    <span class="eyebrow">Step 2</span>
+    <h2>Run the numbers</h2>
+    <p>See exactly how your money grows under each instrument.</p>
+  </div>
+  <div class="calc-tabs">
+    <div class="calc-tab active" data-tab="sip">SIP Calculator</div>
+    <div class="calc-tab" data-tab="fd">FD Calculator</div>
+    <div class="calc-tab" data-tab="goal">Goal-based Calculator</div>
+  </div>
+
+  <div class="calc-panel active" id="panel-sip">
+    <div class="card">
+      <div class="field"><label>Monthly investment (₹)</label><input type="number" id="sipAmt" value="3000"></div>
+      <div class="field"><label>Expected annual return (%)</label><input type="number" id="sipRate" value="12"></div>
+      <div class="field"><label>Duration (years)</label><input type="number" id="sipYears" value="10"></div>
+      <button class="btn btn-primary" onclick="calcSIP()">Calculate</button>
+    </div>
+    <div class="result-box" id="sipResult">
+      <div class="result-row"><span>Total invested</span><span class="mono" id="sipInvested">—</span></div>
+      <div class="result-row"><span>Estimated returns</span><span class="mono" id="sipGains">—</span></div>
+      <div class="result-row"><span>Maturity value</span><span class="big" id="sipTotal">—</span></div>
+    </div>
+  </div>
+
+  <div class="calc-panel" id="panel-fd">
+    <div class="card">
+      <div class="field"><label>Principal amount (₹)</label><input type="number" id="fdAmt" value="100000"></div>
+      <div class="field"><label>Interest rate (% p.a.)</label><input type="number" id="fdRate" value="7"></div>
+      <div class="field"><label>Duration (years)</label><input type="number" id="fdYears" value="5"></div>
+      <button class="btn btn-primary" onclick="calcFD()">Calculate</button>
+    </div>
+    <div class="result-box">
+      <div class="result-row"><span>Principal</span><span class="mono" id="fdPrincipal">—</span></div>
+      <div class="result-row"><span>Interest earned</span><span class="mono" id="fdInterest">—</span></div>
+      <div class="result-row"><span>Maturity value</span><span class="big" id="fdTotal">—</span></div>
+    </div>
+  </div>
+
+  <div class="calc-panel" id="panel-goal">
+    <div class="card">
+      <div class="field"><label>Target amount (₹)</label><input type="number" id="goalAmt" value="1000000"></div>
+      <div class="field"><label>Timeline (years)</label><input type="number" id="goalYears" value="5"></div>
+      <div class="field"><label>Expected annual return (%)</label><input type="number" id="goalRate" value="12"></div>
+      <button class="btn btn-primary" onclick="calcGoal()">Calculate</button>
+    </div>
+    <div class="result-box">
+      <div class="result-row"><span>You need to invest monthly</span><span class="big" id="goalMonthly">—</span></div>
+      <div class="result-row"><span>Total you'll invest</span><span class="mono" id="goalInvested">—</span></div>
+      <div class="result-row"><span>Target amount</span><span class="mono" id="goalTarget">—</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare">
+  <div class="section-head">
+    <span class="eyebrow">Step 3</span>
+    <h2>SIP vs FD vs PPF</h2>
+    <p>The comparison every first-time earner searches for — side by side.</p>
+  </div>
+  <table class="compare">
+    <tr><th>Instrument</th><th>Typical Returns</th><th>Risk</th><th>Liquidity</th><th>Tax Benefit</th><th>Best For</th></tr>
+    <tr><td><strong>SIP (Mutual Funds)</strong></td><td class="hi">10–14% p.a.*</td><td>Medium–High</td><td>High (redeemable anytime)</td><td>ELSS SIPs: yes (80C)</td><td>Long-term wealth growth</td></tr>
+    <tr><td><strong>Fixed Deposit</strong></td><td>6.5–7.5% p.a.</td><td>Very Low</td><td>Medium (penalty on early exit)</td><td>5-yr tax-saver FD: yes</td><td>Safety, short-term goals</td></tr>
+    <tr><td><strong>PPF</strong></td><td>7–7.5% p.a.</td><td>Very Low</td><td>Low (15-yr lock-in)</td><td>Fully tax-free (EEE)</td><td>Retirement, long-term safety</td></tr>
+  </table>
+  <p style="font-size:0.78rem; color:var(--ink-soft); margin-top:10px;">*Market-linked, not guaranteed. Illustrative figures for education only.</p>
+</section>
+
+<!-- LEARN -->
+<section id="learn">
+  <div class="section-head">
+    <span class="eyebrow">Step 4</span>
+    <h2>Learn the basics</h2>
+    <p>Bite-sized explainers — tap to expand.</p>
+  </div>
+  <div class="accordion" id="accordion"></div>
+</section>
+
+<footer>FinMentor AI — hackathon prototype. All figures are illustrative and for educational demo purposes only.</footer>
+
+<!-- CHAT -->
+<button id="chatToggle" onclick="toggleChat()">💬</button>
+<div id="chatPanel">
+  <div class="chat-head"><span>Ask FinMentor</span><span onclick="toggleChat()" style="cursor:pointer;">✕</span></div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg bot">Hi! I'm FinMentor. Ask me things like "SIP vs FD" or "how much should I save".</div>
+  </div>
+  <div class="chip-row">
+    <div class="qchip" onclick="askChip('SIP vs FD')">SIP vs FD?</div>
+    <div class="qchip" onclick="askChip('emergency fund')">Emergency fund?</div>
+    <div class="qchip" onclick="askChip('how much save')">How much to save?</div>
+  </div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a question..." onkeydown="if(event.key==='Enter') sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
