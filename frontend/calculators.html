@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinMentor AI — Calculators</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link rel="stylesheet" href="calculators.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>Calculators</h1>
+  <p class="sub">SIP · FD · Goal Planner · Emergency Fund · 50-30-20 Budget — every result includes a chart and saves to your history.</p>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="panels"></div>
+
+  <div class="card">
+    <h3>🕒 Calculator History</h3>
+    <div id="history-list"></div>
+    <div class="sync-note" id="sync-note"></div>
+    <button class="clear-btn" id="clear-history-btn">Clear history</button>
+  </div>
+</div>
+
+<script src="calculators.js"></script>
+</body>
+</html>

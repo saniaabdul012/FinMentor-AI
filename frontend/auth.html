@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinMentor AI — Log In / Sign Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+<div class="auth-wrap">
+
+  <!-- Left brand panel -->
+  <div class="auth-side">
+    <div class="brand"><div class="brand-mark">₹</div> FinMentor AI</div>
+    <div>
+      <div class="auth-quote">Turn your <span>first salary</span> into a life-long roadmap.</div>
+      <div class="auth-milestones" style="margin-top:40px;">
+        <div class="row"><span class="dot"></span> Personalized SIP / FD / PPF split</div>
+        <div class="row"><span class="dot"></span> Goal-based investment planning</div>
+        <div class="row"><span class="dot"></span> Calculator history saved to your account</div>
+      </div>
+    </div>
+    <div style="font-size:0.75rem; color:#8593AD;">© FinMentor AI — hackathon prototype</div>
+  </div>
+
+  <!-- Right form panel -->
+  <div class="auth-form-side">
+    <div class="auth-card">
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Log In</div>
+        <div class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</div>
+      </div>
+
+      <div class="auth-alert" id="authAlert"></div>
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)">
+        <div class="auth-heading">
+          <h1>Welcome back</h1>
+          <p>Log in to see your roadmap and saved calculations.</p>
+        </div>
+
+        <div class="auth-field">
+          <label>Email</label>
+          <input type="email" id="liEmail" placeholder="you@example.com" autocomplete="email">
+          <div class="err"></div>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="liPass" placeholder="••••••••" autocomplete="current-password">
+          <div class="err"></div>
+        </div>
+
+        <div class="auth-row-between">
+          <label class="auth-check"><input type="checkbox"> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit">Log in</button>
+
+        <div class="auth-switch">Don't have an account? <a onclick="switchAuthTab('signup')">Sign up</a></div>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form class="auth-form" id="form-signup" onsubmit="handleSignup(event)">
+        <div class="auth-heading">
+          <h1>Create your account</h1>
+          <p>Start building your financial roadmap.</p>
+        </div>
+
+        <div class="auth-field">
+          <label>Full name</label>
+          <input type="text" id="suName" placeholder="Sania Reddy" autocomplete="name">
+          <div class="err"></div>
+        </div>
+        <div class="auth-field">
+          <label>Email</label>
+          <input type="email" id="suEmail" placeholder="you@example.com" autocomplete="email">
+          <div class="err"></div>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="suPass" placeholder="At least 6 characters" autocomplete="new-password">
+          <div class="err"></div>
+        </div>
+        <div class="auth-field">
+          <label>Confirm password</label>
+          <input type="password" id="suConfirm" placeholder="Re-enter password" autocomplete="new-password">
+          <div class="err"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit">Create account</button>
+
+        <div class="auth-switch">Already have an account? <a onclick="switchAuthTab('login')">Log in</a></div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
